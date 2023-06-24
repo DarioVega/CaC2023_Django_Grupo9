@@ -1,15 +1,8 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'bootstrap5/css/bootstrap.min.css' %}">  
-    <title>Lista</title>
-</head>
-<body>
-    <h1 class="text-primary">Lista</h1>
+{% block contenido %}
+
+<h1>Productos</h1>
 
     <br />
 
@@ -41,9 +34,10 @@
           <td>@twitter</td>
         </tr>
       </tbody>
-    </table>
+    </table> 
+
+{% endblock contenido %}
+
+    
 
 
-    <script src="{% static 'bootstrap5/js/bootstrap.min.js' %}"></script>
-</body>
-</html>

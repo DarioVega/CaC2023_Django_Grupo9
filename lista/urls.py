@@ -19,5 +19,5 @@ from django.urls import path
 from lista import views
 
 urlpatterns = [
-    path('', views.lista)
+    path('', views.lista, name='lista')
 ]
