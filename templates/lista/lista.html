@@ -1,14 +1,31 @@
 {% extends 'base.html' %}
 
-
 {% block contenido %}
 
+  <h1 class="text-center mt-5">Lista de Compras</h1>
 
-  <h1 class="mt-5 d-block" style="font-size: 6rem; color:antiquewhite" >Armá tu lista de compras!!!</h1>
-                <div class="img_carrito d-flex justify-content-center mt-5">
-                    <img src="../static/img/carrito.png" alt="carrito de compras" width="20%" height="50%" >
-                </div>
-                
 
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Tienda</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ producto }}</td>
+      </tr>
+      {% endfor %}
+      {% if agregar_form.nombre_producto.value %}
+      <tr>
+        <th scope="row">{{ productos|length|add:1 }}</th>
+        <td>{{ agregar_form.nombre_producto.value }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
 {% endblock contenido %}
-

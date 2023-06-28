@@ -1,18 +1,54 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
+<div class="container">
+  <h1 class="text-center mt-5 mb-4">Lista de compras</h1>
 
-<h1 class="d-flex justify-content-center text-info fs-1 mt-5">Armá tu lista de compras!!!</h1>
-  
-  <div class="container mt-5 w-25">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <img src="../static/img/carrito.png" height="250vh" alt="carrito de compra" class="card-img">
-        </div>
+  <div class="row justify-content-center align-items-center mt-4">
+    <div class="col-md-6">
+      {% if mensaje %}
+      <div class="alert alert-danger bg-light mb-4">
+        {% for msg in mensaje %}
+        <p>{{ msg }}</p>
+        {% endfor %}
       </div>
+      {% endif %}
+
+      <form id="agregar-form" name="agregar-form" action="{% url 'productos' %}" method="POST" class="d-flex justify-content-center">
+        {% csrf_token %}
+        <div class="form-group">
+          <div class="d-flex">
+            {{ agregar_form.nombre_producto.label_tag }}
+            {{ agregar_form.nombre_producto }}
+            {{ agregar_form.nombre_producto.errors }}
+          </div>
+          <p>{{ agregar_form.nombre_producto.value }}</p> <!-- Mostrar el valor ingresado en el cuadro de texto -->
+        </div>
+      </form>
     </div>
   </div>
 
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ producto }}</td>
+      </tr>
+      {% endfor %}
+      {% if agregar_form.nombre_producto.value %}
+      <tr>
+        <th scope="row">{{ productos|length|add:1 }}</th>
+        <td>{{ agregar_form.nombre_producto.value }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
 {% endblock contenido %}
-
