@@ -1,23 +1,53 @@
-from django.http import HttpResponseNotAllowed
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views import View
+from tiendas.forms import AgregarForm
+from tiendas.models import Tienda
 
-from tiendas.forms import TiendasForm
+class TiendasView(View):
+    template_name = 'tiendas/tiendas.html'
 
-def tiendas(request):
-    if request.method == 'POST':
-        tiendas_form = TiendasForm(request.POST)
-        if tiendas_form.is_valid():
-            messages.success(request, 'Hemos recibido tus datos')
+    def get(self, request):
+        agregar_form = AgregarForm()
+        tiendas = Tienda.objects.all().order_by('nombre')
+        context = {
+            'agregar_form': agregar_form,
+            'tiendas': tiendas
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        if 'eliminar' in request.POST:
+            tienda_id = int(request.POST.get('eliminar'))
+            self.eliminar_tienda(request, tienda_id)
+            messages.success(request, 'La tienda se ha eliminado correctamente')
+            return redirect('tiendas')
         else:
-            tiendas_form.add_error(None, 'Ha ocurrido un error en el formulario')  # Agregar mensaje de error al formulario
-    elif request.method == 'GET':
-        tiendas_form = TiendasForm()
-    else:
-        return HttpResponseNotAllowed(f'Método {request.method} no soportado')
+            agregar_form = AgregarForm(request.POST)
+            if agregar_form.is_valid():
+                agregar_form.save()
+                messages.success(request, 'La tienda se ha agregado correctamente')
+                return redirect('tiendas')
+            else:
+                messages.error(request, 'Ha ocurrido un error en el formulario')
+                agregar_form = AgregarForm()
 
-    context = {
-        'tiendas_form': tiendas_form
-    }
+        tiendas = Tienda.objects.all().order_by('nombre')
 
-    return render(request, 'tiendas/tiendas.html', context)
+        context = {
+            'agregar_form': agregar_form,
+            'tiendas': tiendas
+        }
+
+        return render(request, self.template_name, context)
+
+    def eliminar_tienda(self, request, tienda_id):
+        tienda = Tienda.objects.get(id=tienda_id)
+        tienda.delete()
+
+class EliminarTiendaView(View):
+
+    def post(self, request, tienda_id):
+        tienda = Tienda.objects.get(id=tienda_id)
+        tienda.delete()
+        return redirect('tiendas')

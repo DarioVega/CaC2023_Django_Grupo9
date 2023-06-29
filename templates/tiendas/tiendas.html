@@ -14,16 +14,14 @@
       </div>
       {% endif %}
 
-      <form id="tiendas-form" name="tiendas-form" action="{% url 'tiendas' %}" method="POST" class="d-flex justify-content-center">
+      <form id="agregar-form" name="agregar-form" action="{% url 'tiendas' %}" method="POST" class="d-flex justify-content-center">
         {% csrf_token %}
         <div class="form-group">
           <div class="d-flex">
-            {{ tiendas_form.nombre_tiendas.label_tag }}
-            {{ tiendas_form.nombre_tiendas }}
-            {{ tiendas_form.nombre_tiendas.errors }}
+            {{ agregar_form.nombre_tienda }}
+            {{ agregar_form.nombre_tienda.errors }}
             <button class="btn btn-primary ms-3" type="submit">Agregar</button>
           </div>
-          <p>{{ tiendas_form.nombre_tiendas.value }}</p> <!-- Mostrar el valor ingresado en el cuadro de texto -->
         </div>
       </form>
     </div>
@@ -32,21 +30,41 @@
   <table class="table mt-4">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
+        <th scope="col"></th> <!-- Celda vacía para el checkbox -->
+        <th scope="col" class="text-end">Nombre</th> 
+        <th scope="col" class="text-end">Acciones</th> 
       </tr>
     </thead>
     <tbody>
       {% for tienda in tiendas %}
       <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ tienda }}</td>
+        <td>
+          <input type="checkbox">
+        </td>
+        <td class="text-end">{{ tienda.nombre }}</td> 
+        <td class="text-end">
+          <button class="btn btn-warning me-2">Editar</button>
+          <form action="{% url 'eliminar_tienda' tienda.id %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Eliminar</button>
+          </form>
+        </td>
       </tr>
       {% endfor %}
-      {% if tiendas_form.nombre_tiendas.value %}
+      {% if agregar_form.nombre_tienda.value %}
       <tr>
-        <th scope="row">{{ tiendas|length|add:1 }}</th>
-        <td>{{ tiendas_form.nombre_tiendas.value }}</td>
+        <td>
+          <input type="checkbox">
+        </td>
+        <td class="text-end">{{ agregar_form.nombre_tienda.value }}</td> 
+        <td class="text-end">
+          <button class="btn btn-warning me-2">Editar</button>
+          <form action="{% url 'eliminar_tienda' tienda.id %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Eliminar</button>
+        </form>
+        
+        </td>
       </tr>
       {% endif %}
     </tbody>

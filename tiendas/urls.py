@@ -15,9 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-
-from tiendas import views
+from tiendas.views import TiendasView, EliminarTiendaView
 
 urlpatterns = [
-    path('', views.tiendas, name='tiendas')
+    path('tiendas/', TiendasView.as_view(), name='tiendas'),
+    path('eliminar-tienda/<int:tienda_id>/', EliminarTiendaView.as_view(), name='eliminar_tienda'),
 ]
