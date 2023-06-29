@@ -1,4 +1,5 @@
 from django import forms
+from productos.models import Producto
 
 def solo_caracteres(value):
     if any(char.isdigit() for char in value):
@@ -18,7 +19,7 @@ class AgregarForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Ingrese el nombre del producto',
+                'placeholder': 'Ingrese el producto',
             }
         )
     )
@@ -33,3 +34,13 @@ class AgregarForm(forms.Form):
         nombre_producto = cleaned_data.get('nombre_producto')
         if nombre_producto:
             validar_longitud_minima(nombre_producto)
+
+    def save(self):
+        nombre = self.cleaned_data['nombre_producto']
+        producto = Producto(nombre=nombre)
+        producto.save()
+        
+
+
+
+        
