@@ -32,21 +32,34 @@
   <table class="table mt-4">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
+        <th scope="col"></th> <!-- Celda vacía para el checkbox -->
+        <th scope="col" class="text-end">Nombre</th> <!-- Alineación del título "Nombre" -->
+        <th scope="col" class="text-end">Acciones</th> <!-- Alineación del título "Acciones" -->
       </tr>
     </thead>
     <tbody>
       {% for producto in productos %}
       <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ producto }}</td>
+        <td>
+          <input type="checkbox">
+        </td>
+        <td class="text-end">{{ producto }}</td> <!-- Alineación del objeto generado -->
+        <td class="text-end">
+          <button class="btn btn-warning me-2">Editar</button>
+          <button class="btn btn-danger">Eliminar</button>
+        </td>
       </tr>
       {% endfor %}
       {% if agregar_form.nombre_producto.value %}
       <tr>
-        <th scope="row">{{ productos|length|add:1 }}</th>
-        <td>{{ agregar_form.nombre_producto.value }}</td>
+        <td>
+          <input type="checkbox">
+        </td>
+        <td class="text-end">{{ agregar_form.nombre_producto.value }}</td> <!-- Alineación del objeto generado -->
+        <td class="text-end">
+          <button class="btn btn-warning me-2">Editar</button>
+          <button class="btn btn-danger">Eliminar</button>
+        </td>
       </tr>
       {% endif %}
     </tbody>

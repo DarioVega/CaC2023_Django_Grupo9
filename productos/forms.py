@@ -12,7 +12,7 @@ def validar_longitud_minima(value):
 
 class AgregarForm(forms.Form):
     nombre_producto = forms.CharField(
-        label='Nuevo Producto',
+        # label='Nuevo Producto',
         max_length=50,
         validators=[solo_caracteres],
         widget=forms.TextInput(
