@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
-from tiendas.forms import AgregarForm
-from tiendas.models import Tienda
+from .forms import AgregarForm
+from .models import Tienda
 
 class TiendasView(View):
     template_name = 'tiendas/tiendas.html'
@@ -44,6 +44,7 @@ class TiendasView(View):
     def eliminar_tienda(self, request, tienda_id):
         tienda = Tienda.objects.get(id=tienda_id)
         tienda.delete()
+        return redirect('tiendas')
 
 class EliminarTiendaView(View):
 

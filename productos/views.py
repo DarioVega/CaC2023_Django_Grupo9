@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from productos.forms import AgregarForm
-from productos.models import Producto
+from .forms import AgregarForm
+from .models import Producto, Tienda
+
+
 
 def productos(request):
     if request.method == 'POST':
@@ -20,16 +22,19 @@ def productos(request):
                 messages.error(request, 'Ha ocurrido un error en el formulario')
     else:
         agregar_form = AgregarForm()
-
+        
     productos = Producto.objects.all().order_by('nombre')
+    tiendas = Tienda.objects.all().order_by('nombre')
 
     context = {
         'agregar_form': agregar_form,
-        'productos': productos
+        'productos': productos,
+        'tiendas': tiendas
     }
 
     return render(request, 'productos/productos.html', context)
 
+   
 
 def eliminar_producto(request, producto_id):
     producto = Producto.objects.get(id=producto_id)

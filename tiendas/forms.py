@@ -9,7 +9,7 @@ def solo_caracteres(value):
 
 def validar_longitud_minima(value):
     if len(value) < 2:
-        raise forms.ValidationError('El nombre del tienda debe tener al menos 2 caracteres.')
+        raise forms.ValidationError('El nombre de la tienda debe tener al menos 2 caracteres.')
 
 class AgregarForm(forms.Form):
     nombre_tienda = forms.CharField(
@@ -18,7 +18,7 @@ class AgregarForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Ingrese el tienda',
+                'placeholder': 'Ingrese la tienda',
             }
         )
     )

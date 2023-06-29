@@ -9,3 +9,7 @@ class Listas(models.Model):
 
     def __str__(self):
         return f"Lista de compras en {self.tienda.nombre} - {self.fecha}"
+
+
+
+

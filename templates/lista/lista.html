@@ -7,32 +7,45 @@
   <button class="btn btn-primary mt-5" id="generar-btn">Generar</button>
 </div>
 
+<table class="table mt-4">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Tienda</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for producto in productos %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ producto }}</td>
+    </tr>
+    {% endfor %}
+    {% if agregar_form.nombre_producto.value %}
+    <tr>
+      <th scope="row">{{ productos|length|add:1 }}</th>
+      <td>{{ agregar_form.nombre_producto.value }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
 
-
-
-
-  
-  <table class="table mt-4">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Producto</th>
-        <th scope="col">Tienda</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for producto in productos %}
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ producto }}</td>
-      </tr>
-      {% endfor %}
-      {% if agregar_form.nombre_producto.value %}
-      <tr>
-        <th scope="row">{{ productos|length|add:1 }}</th>
-        <td>{{ agregar_form.nombre_producto.value }}</td>
-      </tr>
+<form id="agregar-form" name="agregar-form" action="{% url 'productos' %}" method="POST" class="needs-validation" novalidate>
+  {% csrf_token %}
+  <div class="form-group">
+    <div class="d-flex align-items-center">
+      {{ agregar_form.nombre_producto }}
+      {% if agregar_form.nombre_producto.errors %}
+      <div class="invalid-feedback">
+        {% for error in agregar_form.nombre_producto.errors %}
+        {{ error }}
+        {% endfor %}
+      </div>
       {% endif %}
-    </tbody>
-  </table>
+    </div>
+  </div>
+</form>
+
 {% endblock contenido %}
+
