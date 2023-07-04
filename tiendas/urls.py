@@ -18,6 +18,6 @@ from django.urls import path
 from tiendas.views import TiendasView, EliminarTiendaView
 
 urlpatterns = [
-    path('tiendas/', TiendasView.as_view(), name='tiendas'),
+    path('', TiendasView.as_view(), name='tiendas'),
     path('eliminar-tienda/<int:tienda_id>/', EliminarTiendaView.as_view(), name='eliminar_tienda'),
 ]

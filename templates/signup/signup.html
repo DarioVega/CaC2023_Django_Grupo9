@@ -1,28 +1,30 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-<div class="container d-flex justify-content-center">
-    <h1>Signup</h1>
-    <form action="/productos/" method="POST" class="needs-validation" novalidate>
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {% if field.field.required %}
-                    <input type="{{ field.field.widget.input_type }}" class="form-control {% if field.errors %}is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" {% if field.value %}value="{{ field.value }}"{% endif %} required>
-                {% else %}
-                    <input type="{{ field.field.widget.input_type }}" class="form-control {% if field.errors %}is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" {% if field.value %}value="{{ field.value }}"{% endif %}>
-                {% endif %}
-                {% if field.errors %}
-                    <div class="invalid-feedback">
-                        {% for error in field.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        {% endfor %}
-        <button class="btn btn-primary" type="submit">Signup</button>
-    </form>
+<div class="container d-flex flex-column align-items-center">
+    <h1 class="title">Signup</h1>
+    <div class="content">
+        <form action="/productos/" method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% if field.field.required %}
+                        <input type="{{ field.field.widget.input_type }}" class="form-control {% if field.errors %}is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" {% if field.value %}value="{{ field.value }}"{% endif %} required>
+                    {% else %}
+                        <input type="{{ field.field.widget.input_type }}" class="form-control {% if field.errors %}is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" {% if field.value %}value="{{ field.value }}"{% endif %}>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button class="btn btn-primary" type="submit">Signup</button>
+        </form>
+    </div>
 </div>
 {% endblock contenido %}
